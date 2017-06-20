@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node_modules/.bin/mocha",
     "createdb": "createdb grocery_store",
     "schema": "psql grocery_store < schema.sql",
     "import": "psql grocery_store < load-data.sql"
@@ -13,6 +13,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chai": "^4.0.2",
+    "mocha": "^3.4.2",
     "pg-promise": "^5.9.3"
   }
 }
