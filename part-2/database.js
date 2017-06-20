@@ -3,49 +3,39 @@ const connectionString = process.env.DATABASE_URL || `postgres://${process.env.U
 const db = pgp(connectionString)
 
 const allItems = () => {
-    db.any('SELECT id, name,  FROM grocery_items')
-    .then(console.log)
-    .catch(console.log)
+    return db.any('SELECT id, name FROM grocery_items')
 }
 
 const itemsInSection = (section) => {
-    db.any('SELECT id, name FROM grocery_items WHERE section = $1', section)
-    .then(console.log)
-    .catch(console.log)
+    return db.any('SELECT id, name FROM grocery_items WHERE section = $1', section)
 }
 
 const cheapItems = () => {
-    db.any('SELECT id, price FROM grocery_items WHERE price <= 10 ORDER BY price ASC')
-    .then(console.log)
-    .catch(console.log)
+    return db.any('SELECT id, name, price FROM grocery_items WHERE price <= 10 ORDER BY price ASC')
 }
 
 const countItemsInSection = (section) => {
-    let count = 0; 
-    db.any('SELECT * FROM grocery_items WHERE section = $1', section)
-    .then(data => {
-        data.forEach(item => {
-            count++
-        })
-        console.log(count)
-    })
-    .catch(console.log)
+    return db.any('SELECT Count(name) FROM grocery_items WHERE section = $1', section)
 }
 
 const mostRecentOrders = () => {
-    db.any('SELECT id, date_purchased FROM orders ORDER BY date_purchased ASC LIMIT 10')
-    .then(console.log)
-    .catch(console.log)
+    return db.any('SELECT id, date_purchased FROM orders ORDER BY date_purchased ASC LIMIT 10')
 }
 
 const lastShopperName = () => {
-    db.any('SELECT shopper FROM orders ORDER BY date_purchased ASC LIMIT 1')
-    .then(console.log)
-    .catch(console.log)
+    return db.any('SELECT shopper FROM orders ORDER BY date_purchased ASC LIMIT 1')
 }
 
 const orderTotal = (ID) => {
-    db.any('SELECT SUM(price) FROM orders LEFT JOIN grocery_items ON name = item WHERE orders.id = $1', ID)
-    .then(console.log)
-    .catch(console.log) 
+    return db.any('SELECT SUM(price) FROM orders LEFT JOIN grocery_items ON name = item WHERE orders.id = $1', ID) 
+}
+
+module.exports = {
+    allItems, 
+    itemsInSection, 
+    cheapItems, 
+    countItemsInSection, 
+    mostRecentOrders, 
+    lastShopperName, 
+    orderTotal
 }
