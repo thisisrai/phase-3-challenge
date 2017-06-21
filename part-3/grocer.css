@@ -169,3 +169,8 @@ body {
     display: inline-block;
     font-size: 16px;
 }
+
+.total-price {
+  float: right; 
+  margin-right: 35%; 
+}

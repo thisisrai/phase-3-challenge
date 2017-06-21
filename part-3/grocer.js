@@ -29,6 +29,10 @@ let listCreator = () => {
     }
 }
 
+let totalFunction = () => {
+    document.getElementsByClassName("total-price")[0].innerHTML = `Total $${total.toFixed(2)}`
+}
+
 //for modal clear button
 let clearItem = () => {
     count = 0
@@ -47,7 +51,7 @@ let span = document.getElementsByClassName("close")[0];
 modalBtn.onclick = function() {
     modal.style.display = "block"
     listCreator()
-    total()
+    totalFunction()
 }
 
 span.onclick = function() {
